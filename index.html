@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Curricular Interactiva – Economía UNAP</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { text-align: center; }
+    h2 { margin-top: 40px; background: #ddd; padding: 10px; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+    th { background: #eee; }
+    .fucsia { background-color: #f7a1d5; }
+    .rosado { background-color: #ffc0cb; }
+    .morado { background-color: #c38ec7; }
+    .lila { background-color: #d8b7dd; }
+    .tachado { text-decoration: line-through; opacity: 0.5; }
+    select { width: 100%; }
+  </style>
+</head>
+<body>
+
+<h1>Malla Curricular Interactiva – Economía UNAP</h1>
+<div id="tabla"></div>
+
+<h2>Créditos por Ciclo</h2>
+<ul id="conteo-creditos"></ul>
+
+<script>
+  const malla = {
+    "Ciclo 1": [
+      { nombre: "MATEMÁTICA", creditos: 4.0, tipo: "fucsia", prerequisito: "(prelación pendiente)" },
+      { nombre: "DERECHO CONSTITUCIONAL Y DERECHOS HUMANOS", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "NATACIÓN", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "FUNDAMENTOS DE ADMINISTRACIÓN", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "LENGUAJE, REDACCIÓN Y ORATORIA", creditos: 4.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "FILOSOFÍA", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "VOLEIBOL", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "CREATIVIDAD E INNOVACIÓN EMPRESARIAL", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "GIMNASIA", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "INGLÉS BÁSICO I", creditos: 2.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "FÚTBOL", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" }
+    ],
+    "Ciclo 2": [
+      { nombre: "TEATRO", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "MATEMÁTICA II", creditos: 4.0, tipo: "fucsia", prerequisito: "MATEMÁTICA" },
+      { nombre: "ORATORIA", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "FUNDAMENTOS DE CONTABILIDAD", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "FUNDAMENTOS DE ECONOMÍA", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "PRIMEROS AUXILIOS", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "BÁSQUETBOL", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "FOLKLORE", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "INGLÉS BÁSICO II", creditos: 2.0, tipo: "rosado", prerequisito: "INGLÉS BÁSICO I" },
+      { nombre: "DEFENSA PERSONAL", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "REALIDAD NACIONAL Y DESARROLLO REGIONAL AMAZÓNICO", creditos: 4.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "ATLETISMO", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "DANZAS", creditos: 1.0, tipo: "lila", prerequisito: "(prelación pendiente)" },
+      { nombre: "METODOLOGÍA DE LA INVESTIGACIÓN CIENTÍFICA", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" }
+    ],
+    "Ciclo 3": [
+      { nombre: "MICROECONOMÍA", creditos: 4.0, tipo: "fucsia", prerequisito: "FUNDAMENTOS DE ECONOMÍA" },
+      { nombre: "MATEMÁTICA III", creditos: 4.0, tipo: "fucsia", prerequisito: "MATEMÁTICA II" },
+      { nombre: "ESTADÍSTICA I", creditos: 4.0, tipo: "fucsia", prerequisito: "MATEMÁTICA II" },
+      { nombre: "COSTO Y PRESUPUESTO EMPRESARIAL", creditos: 3.0, tipo: "rosado", prerequisito: "FUNDAMENTOS DE CONTABILIDAD" },
+      { nombre: "DOCTRINAS ECONÓMICAS", creditos: 3.0, tipo: "rosado", prerequisito: "FUNDAMENTOS DE ECONOMÍA" },
+      { nombre: "HISTORIA ECONÓMICA DEL PERÚ", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" }
+    ],
+    "Ciclo 4": [
+      { nombre: "SOCIOLOGÍA", creditos: 2.0, tipo: "rosado", prerequisito: "FILOSOFÍA" },
+      { nombre: "CONTABILIDAD GERENCIAL", creditos: 3.0, tipo: "rosado", prerequisito: "COSTO Y PRESUPUESTO EMPRESARIAL" },
+      { nombre: "ESTADÍSTICA II", creditos: 4.0, tipo: "fucsia", prerequisito: "ESTADÍSTICA I" },
+      { nombre: "MATEMÁTICA FINANCIERA", creditos: 4.0, tipo: "fucsia", prerequisito: "MATEMÁTICA II" },
+      { nombre: "ANÁLISIS MICROECONÓMICO", creditos: 4.0, tipo: "fucsia", prerequisito: "MICROECONOMÍA" },
+      { nombre: "MATEMÁTICA IV", creditos: 4.0, tipo: "fucsia", prerequisito: "MATEMÁTICA III" }
+    ],
+    "Ciclo 5": [
+      { nombre: "ANÁLISIS Y GESTIÓN DE RIESGO", creditos: 3.0, tipo: "rosado", prerequisito: "MATEMÁTICA IV" },
+      { nombre: "TEORÍA DE LA REGULACIÓN ECONÓMICA", creditos: 4.0, tipo: "fucsia", prerequisito: "ANÁLISIS MICROECONÓMICO" },
+      { nombre: "PROGRAMAS INFORMÁTICOS PARA LA ECONOMÍA", creditos: 4.0, tipo: "rosado", prerequisito: "ESTADÍSTICA II" },
+      { nombre: "ECONOMÍA DE RECURSOS NATURALES Y MEDIO AMBIENTE", creditos: 4.0, tipo: "rosado", prerequisito: "ANÁLISIS MICROECONÓMICO" },
+      { nombre: "RESPONSABILIDAD SOCIAL", creditos: 2.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "MACROECONOMÍA", creditos: 4.0, tipo: "fucsia", prerequisito: "FUNDAMENTOS DE ECONOMÍA" }
+    ],
+    "Ciclo 6": [
+      { nombre: "ANÁLISIS MACROECONÓMICO", creditos: 4.0, tipo: "fucsia", prerequisito: "MACROECONOMÍA" },
+      { nombre: "ECONOMÍA DEL CAPITAL HUMANO Y DEL EMPLEO", creditos: 3.0, tipo: "rosado", prerequisito: "MACROECONOMÍA" },
+      { nombre: "DEONTOLOGÍA PROFESIONAL", creditos: 3.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "OPTIMIZACIÓN ECONÓMICA", creditos: 4.0, tipo: "fucsia", prerequisito: "MATEMÁTICA IV" },
+      { nombre: "INVESTIGACIÓN DE MERCADOS", creditos: 4.0, tipo: "rosado", prerequisito: "PROGRAMAS INFORMÁTICOS PARA LA ECONOMÍA" },
+      { nombre: "ECONOMETRÍA I", creditos: 4.0, tipo: "fucsia", prerequisito: "ESTADÍSTICA II" }
+    ],
+    "Ciclo 7": [
+      { nombre: "ECONOMÍA FINANCIERA", creditos: 4.0, tipo: "rosado", prerequisito: "CONTABILIDAD GERENCIAL" },
+      { nombre: "FINANZAS CORPORATIVAS", creditos: 3.0, tipo: "rosado", prerequisito: "ANÁLISIS Y GESTIÓN DE RIESGO" },
+      { nombre: "TEORÍA MONETARIA", creditos: 4.0, tipo: "fucsia", prerequisito: "ANÁLISIS MACROECONÓMICO" },
+      { nombre: "ECONOMETRÍA II", creditos: 4.0, tipo: "fucsia", prerequisito: "ECONOMETRÍA I" },
+      { nombre: "SEMINARIO DE CUENTAS NACIONALES", creditos: 3.0, tipo: "rosado", prerequisito: "MACROECONOMÍA" },
+      { nombre: "FORMULACIÓN Y EVALUACIÓN DE PROYECTOS I", creditos: 4.0, tipo: "rosado", prerequisito: "INVESTIGACIÓN DE MERCADOS" },
+      { nombre: "DERECHO ECONÓMICO", creditos: 3.0, tipo: "rosado", prerequisito: "DERECHO CONSTITUCIONAL Y DERECHOS HUMANOS" }
+    ],
+    "Ciclo 8": [
+      { nombre: "PLANIFICACIÓN ESTRATÉGICA", creditos: 4.0, tipo: "rosado", prerequisito: "ANÁLISIS MACROECONÓMICO" },
+      { nombre: "MACROECONOMÍA DINÁMICA", creditos: 4.0, tipo: "fucsia", prerequisito: "OPTIMIZACIÓN ECONÓMICA" },
+      { nombre: "FINANZAS PÚBLICAS", creditos: 3.0, tipo: "rosado", prerequisito: "TEORÍA MONETARIA" },
+      { nombre: "TEORÍA DEL CRECIMIENTO Y DESARROLLO", creditos: 4.0, tipo: "fucsia", prerequisito: "ANÁLISIS MACROECONÓMICO" },
+      { nombre: "SEMINARIO DE BANCA Y DE SEGUROS", creditos: 3.0, tipo: "rosado", prerequisito: "ANÁLISIS Y GESTIÓN DE RIESGO" },
+      { nombre: "FORMULACIÓN Y EVALUACIÓN DE PROYECTOS II", creditos: 4.0, tipo: "rosado", prerequisito: "FORMULACIÓN Y EVALUACIÓN DE PROYECTOS I" },
+      { nombre: "TÓPICOS DE ECONOMETRÍA", creditos: 3.0, tipo: "fucsia", prerequisito: "ECONOMETRÍA II" }
+    ],
+    "Ciclo 9": [
+      { nombre: "SEMINARIO DE ECONOMÍA TRIBUTARIA", creditos: 3.0, tipo: "rosado", prerequisito: "ECONOMÍA FINANCIERA" },
+      { nombre: "COMERCIO INTERNACIONAL", creditos: 4.0, tipo: "rosado", prerequisito: "ANÁLISIS MACROECONÓMICO" },
+      { nombre: "SEMINARIO DE TENDENCIAS Y PERSPECTIVAS ECONÓMICAS", creditos: 2.0, tipo: "rosado", prerequisito: "TEORÍA DEL CRECIMIENTO Y DESARROLLO" },
+      { nombre: "SEMINARIO DE DEMOGRAFÍA Y REALIDAD SOCIOECONÓMICA", creditos: 3.0, tipo: "rosado", prerequisito: "MACROECONOMÍA" },
+      { nombre: "SEMINARIO DE TESIS", creditos: 4.0, tipo: "rosado", prerequisito: "METODOLOGÍA DE LA INVESTIGACIÓN CIENTÍFICA" },
+      { nombre: "POLÍTICA ECONÓMICA", creditos: 4.0, tipo: "rosado", prerequisito: "PLANIFICACIÓN ESTRATÉGICA" }
+    ],
+    "Ciclo 10": [
+      { nombre: "TRABAJO DE INVESTIGACIÓN", creditos: 5.0, tipo: "rosado", prerequisito: "SEMINARIO DE TESIS" },
+      { nombre: "ECONOMÍA REGIONAL", creditos: 3.0, tipo: "rosado", prerequisito: "COMERCIO INTERNACIONAL" },
+      { nombre: "PRÁCTICA PRE PROFESIONAL", creditos: 5.0, tipo: "rosado", prerequisito: "(prelación pendiente)" },
+      { nombre: "ECONOMÍA Y GESTIÓN PÚBLICA", creditos: 4.0, tipo: "rosado", prerequisito: "POLÍTICA ECONÓMICA" }
+    ]
+  };
+
+  const tabla = document.getElementById('tabla');
+  const conteo = document.getElementById('conteo-creditos');
+
+  for (const ciclo in malla) {
+    const cursos = malla[ciclo];
+    let totalCreditos = 0;
+
+    let html = `
+      <h2>${ciclo}</h2>
+      <table>
+        <thead>
+          <tr><th>Curso</th><th>Créditos</th><th>Tipo</th></tr>
+        </thead>
+        <tbody>
+    `;
+
+    cursos.forEach((curso, i) => {
+      totalCreditos += curso.creditos;
+      html += `
+        <tr class="${curso.tipo}">
+          <td onclick="this.classList.toggle('tachado')">${curso.nombre}</td>
+          <td>${curso.creditos}</td>
+          <td>
+            <select onchange="colorCurso(this, this.closest('tr'))">
+              <option value="">---</option>
+              <option value="fucsia">Cadena</option>
+              <option value="rosado">No cadena</option>
+              <option value="morado">Jalado</option>
+              <option value="lila">Extracurricular</option>
+            </select>
+          </td>
+        </tr>
+      `;
+    });
+
+    html += `</tbody></table>`;
+    tabla.innerHTML += html;
+    conteo.innerHTML += `<li><strong>${ciclo}:</strong> ${totalCreditos} créditos</li>`;
+  }
+
+  function colorCurso(select, fila) {
+    fila.className = select.value;
+  }
+</script>
+
+</body>
+</html>
