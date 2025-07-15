@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Curricular Interactiva – Economía UNAP</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { text-align: center; }
+    h2 { margin-top: 40px; background: #ddd; padding: 10px; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+    th { background: #eee; }
+    .fucsia { background-color: #f7a1d5; }
+    .rosado { background-color: #ffc0cb; }
+    .morado { background-color: #c38ec7; }
+    .lila { background-color: #d8b7dd; }
+    .tachado { text-decoration: line-through; opacity: 0.5; }
+    select { width: 100%; }
+  </style>
+</head>
+<body>
+
+<h1>Malla Curricular Interactiva – Economía UNAP</h1>
+<div id="tabla"></div>
+
+<h2>Créditos por Ciclo</h2>
+<ul id="conteo-creditos"></ul>
+
+<script>
+  const malla = /* contenido existente de malla (sin cambios) */;
+
+  const tabla = document.getElementById('tabla');
+  const conteo = document.getElementById('conteo-creditos');
+
+  for (const ciclo in malla) {
+    const cursos = malla[ciclo];
+    let totalCreditos = 0;
+
+    let html = `
+      <h2>${ciclo}</h2>
+      <table>
+        <thead>
+          <tr><th>Curso</th><th>Créditos</th><th>Tipo</th><th>Prerrequisito</th></tr>
+        </thead>
+        <tbody>
+    `;
+
+    cursos.forEach((curso, i) => {
+      totalCreditos += curso.creditos;
+      html += `
+        <tr class="${curso.tipo}">
+          <td onclick="this.classList.toggle('tachado')">${curso.nombre}</td>
+          <td>${curso.creditos}</td>
+          <td>
+            <select onchange="colorCurso(this, this.closest('tr'))">
+              <option value="">---</option>
+              <option value="fucsia">Cadena</option>
+              <option value="rosado">No cadena</option>
+              <option value="morado">Jalado</option>
+              <option value="lila">Extracurricular</option>
+            </select>
+          </td>
+          <td>${curso.prerequisito}</td>
+        </tr>
+      `;
+    });
+
+    html += `</tbody></table>`;
+    tabla.innerHTML += html;
+    conteo.innerHTML += `<li><strong>${ciclo}:</strong> ${totalCreditos} créditos</li>`;
+  }
+
+  function colorCurso(select, fila) {
+    fila.className = select.value;
+  }
+</script>
+
+</body>
+</html>
